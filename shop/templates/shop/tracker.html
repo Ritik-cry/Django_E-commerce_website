@@ -1,0 +1,87 @@
+{% extends 'shop/base.html' %} {% block title %}Tracker - E-kellen cart
+{%endblock %} {% block body %}
+<div class="container my-3">
+  <h2 class="text-center">
+    Enter your order id and email to track your orders
+  </h2>
+  <div class="my-4">
+    <form class="row g-3" action="#" id="trackerForm" method="post">
+      {% csrf_token %}
+      <div class="col-md-4">
+        <label for="inputorderid" class="form-label">Order id</label>
+        <input type="text" class="form-control" id="orderid" name="orderid" />
+      </div>
+      <div class="col-md-6">
+        <label for="inputEmail4" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" />
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Track Order</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="container my-3">
+  <h3 id="ship" class="text-center"></h3>
+  <div id="details1"></div>
+</div>
+
+<div class="container my-3">
+  <h3 id="order" class="text-center"></h3>
+  <div id="details2"></div>
+</div>
+{% endblock %} {% block js %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  $("#trackerForm").submit(function (e) {
+    $("#details").empty();
+
+    var fromData = {
+      orderid: $("input[name=orderid]").val(),
+      email: $("input[name=email]").val(),
+      csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+    };
+
+    $.ajax({
+      type: "POST",
+      url: "/shop/tracker/",
+      data: fromData,
+      encode: true,
+    }).done(function (data) {
+      datas = JSON.parse(data);
+      if (datas[0]) {
+        data1 = datas[0];
+        if (data1[0]) {
+          document.getElementById('ship').innerHTML = 'Shipment Details';
+          mystr = ``;
+          for (items of data1) {
+            mystr += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                              ${items.text}
+                      <span class="badge bg-primary rounded-pill">${items.time}</span></li>`;
+          }
+          document.getElementById('details1').innerHTML = mystr;
+          document.getElementById('order').innerHTML = 'Your order details';
+          data2 = JSON.parse(datas[1]);
+          cartdata = JSON.parse(data2);
+          carts = Object.values(cartdata);
+          mystr2 = ``;
+          carts.forEach((element) => {
+            name = element[0];
+            qty = element[1];
+            mystr2 += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                              ${name}
+                       <span class="badge bg-primary rounded-pill">${qty}</span></li>`;
+          });
+          document.getElementById('details2').innerHTML = mystr2;
+        }
+      } 
+      else {
+        document.getElementById('details1').innerHTML = `<p><b>Sorry! Please enter the details correctly</b></p>`;
+      }
+    });
+
+    e.preventDefault();
+  });
+</script>
+{% endblock %}

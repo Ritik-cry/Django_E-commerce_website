@@ -1,0 +1,55 @@
+{% extends 'shop/base.html' %}
+
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'shop/css/shopHome.css' %}">
+{% endblock %}
+
+{% block title %} E-kellen cart: a website for onine buyers {% endblock %}
+
+{% block body %}
+<div class="container my-2">
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{% static 'shop/images/image1.jpg' %}" class="d-block w-100 carImg" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'shop/images/image2.jpg' %}" class="d-block w-100 carImg" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'shop/images/image3.jpg' %}" class="d-block w-100 carImg" alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+{% for product in allProd %}
+<div class="container-fluid">
+    <h2>{{product.0.category}}</h2>
+    <div class="scrolling-wrapper row flex-row flex-nowrap mt-4 pb-4 pt-2">
+        {% for i in product %}
+        <div class="col">
+            <div class="card" style="width: 260px;height:340px;">
+                <a href="/shop/product/{{i.id}}"><img src="/media/{{i.image}}" class="card-img-top" alt="..." style="width:250px;height:250px"></a>
+                <div class="card-body">
+                  <h5 class="card-title">{{i.productName}}</h5>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>    
+{% endfor %}
+{% endblock %}

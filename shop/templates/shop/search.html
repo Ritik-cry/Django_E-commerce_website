@@ -1,0 +1,38 @@
+{% extends 'shop/base.html' %}
+
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'shop/css/shopHome.css' %}">
+{% endblock %}
+
+{% block title %} E-kellen cart: a website for onine buyers {% endblock %}
+
+{% block body %}
+
+{% if allProd|length > 0 %}
+{% for product in allProd %}
+<div class="container-fluid">
+    <h2>{{product.0.category}}</h2>
+    <div class="scrolling-wrapper row flex-row flex-nowrap mt-4 pb-4 pt-2">
+        {% for i in product %}
+        <div class="col">
+            <div class="card" style="width: 260px;height:340px;">
+                <a href="/shop/product/{{i.id}}"><img src="/media/{{i.image}}" class="card-img-top" alt="..." style="width:250px;height:250px"></a>
+                <div class="card-body">
+                  <h5 class="card-title">{{i.productName}}</h5>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div> 
+{% endfor %}
+
+{% else %}
+<div class="container my-5">
+  <center style="font-size: xx-large;"><strong>Sorry!.. </strong>No items matches your query</center>
+</div>
+{% endif %} 
+
+{% endblock %}

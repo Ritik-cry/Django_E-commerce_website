@@ -1,0 +1,22 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}{{product.productName}}- E-Kellen cart{% endblock %}
+
+{% block body %}
+<div id="alert"></div>
+<div class="container my-2">
+    <div class="row">
+        <div class="col-4">
+            <img src="/media/{{product.image}}" alt="">
+        </div>
+        <div class="col-8">
+            <h4>{{product.productName}}</h4>
+            <p>{{product.desc}}</p>
+            <p><b>MRP Rs. <span id="pricecart{{product.id}}">{{product.price}}</span></b></p>
+            <button id="cart{{product.id}}" class="btn btn-warning cartbtn" name="{{product.productName}}">Add to cart</button>
+            <hr>
+            <p>Note :- <i>You can place order once the product is added to the cart.</i></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

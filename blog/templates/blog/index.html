@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %} {% block title %}Blog - E-Kellen cart
+{%endblock%} {% block body %}
+<h3 class="text-center my-2">Welcome to E-Kellen cart Blog Post page</h3>
+<div class="container-fluid my-3 d-flex justify-content-center">
+  {% for i in posts %}
+  <div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-4 d-flex align-items-center">
+        <img src="/media/{{i.thumbnail}}" class="img-fluid rounded-start" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title" style="color: red;">{{i.title}}</h5>
+          <p class="card-text" style="color: brown;">{{i.heading0text}}</p>
+          <a href="/blog/blogPost/{{i.postId}}">Read More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

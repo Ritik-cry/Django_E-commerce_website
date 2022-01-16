@@ -1,0 +1,63 @@
+{% extends 'shop/base.html' %} {% block title %}Contact- E-Kellen cart {%endblock %} 
+{% block body %}
+<div class="container my-2">
+  <h3 class="text-center">Contact Us</h3>
+  <form action="/shop/contact/" method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="username" class="form-label">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="username"
+        name="name"
+        aria-describedby="usernamehelp"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Email address</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        name="email"
+        aria-describedby="emailHelp"
+      />
+      <div id="emailHelp" class="form-text">
+        We'll never share your email with anyone else.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="phone" class="form-label">Phone</label>
+      <input
+        type="phone"
+        class="form-control"
+        id="phone"
+        name="phone"
+        aria-describedby="phoneHelp"
+      />
+      <div id="phoneHelp" class="form-text">
+        We'll never share your phone number with anyone else.
+      </div>
+    </div>
+    <div class="form-floating">
+      <textarea
+        class="form-control"
+        placeholder="Leave a comment here"
+        id="textarea"
+        name="text"
+        style="height: 100px"
+      ></textarea>
+      <label for="floatingTextarea2">How may we help you</label>
+    </div>
+    <button type="submit" class="btn btn-primary my-2">Submit</button>
+  </form>
+</div>
+{% endblock %} {% block js %}
+<script>
+  {% if thank %}
+  alert('Your Query has been submitted. We will get back to you soon');
+  document.location = '/shop/contact/';
+  {% endif %}
+</script>
+{% endblock %}
