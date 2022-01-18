@@ -15,9 +15,9 @@ def shopHome(request):
     params = {'allProd' : allProd}
     return render(request,'shop/index.html',params)
 
-def searchMatch(search,item):
-    if len(search)>2:
-        if (search in item.productName.lower() or search in item.category.lower() or search in item.desc.lower()) :
+def searchMatch(query,item):
+    if len(query)>2:
+        if (query in item.productName.lower() or query in item.category.lower() or query in item.desc.lower()) :
             return True
         else:
             return False
@@ -25,19 +25,10 @@ def searchMatch(search,item):
         return False
 
 def search(request):
-    search = request.GET.get('search','')
-    allProd = []
-    categories = Product.objects.values('category')
-    allCat = {items['category'] for items in categories}
-    for cat in allCat:
-        prodTemp = Product.objects.filter(category=cat)
-        prod = [item for item in prodTemp if searchMatch(search,item)]
-        allProd.append(prod)
-    products = []
-    for item in allProd:
-        if len(item)>0:
-            products.append(item)
-    params = {'allProd' : products}
+    query = request.GET.get('search','')
+    products = Product.objects.all()
+    prod = [item for item in products if searchMatch(query,item)]
+    params = {'allProd' : prod}
     return render(request,'shop/search.html',params)
 
 def about(request):

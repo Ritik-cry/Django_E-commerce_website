@@ -5,7 +5,7 @@ class Product(models.Model):
     productName = models.CharField(max_length=30)
     category = models.CharField(max_length=30)
     price = models.IntegerField()
-    desc = models.CharField(max_length=50)
+    desc = models.CharField(max_length=1000)
     image = models.ImageField(upload_to="shop/images",default="")
 
     def __str__(self):
